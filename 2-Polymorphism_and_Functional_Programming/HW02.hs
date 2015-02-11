@@ -23,7 +23,15 @@ colors = [Red, Green, Blue, Yellow, Orange, Purple]
 
 -- Get the number of exact matches between the actual code and the guess
 exactMatches :: Code -> Code -> Int
-exactMatches = undefined
+exactMatches _ [] = 0
+exactMatches [] _ = 0
+exactMatches xs ys = findMatches 0 xs ys
+    where findMatches :: Int -> Code -> Code -> Int
+          findMatches acc [] _ = acc
+          findMatches acc _ [] = acc
+          findMatches acc (f:fs) (s:ss)
+            | f == s    = findMatches (acc + 1) fs ss
+            | otherwise = findMatches acc fs ss
 
 -- Exercise 2 -----------------------------------------
 

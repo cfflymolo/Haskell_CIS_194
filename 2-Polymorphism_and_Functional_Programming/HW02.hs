@@ -1,5 +1,3 @@
-{-# OPTIONS_GHC -Wall #-}
-module HW02 where
 
 -- Mastermind -----------------------------------------
 
@@ -37,7 +35,11 @@ exactMatches xs ys = findMatches 0 xs ys
 
 -- For each peg in xs, count how many times is occurs in ys
 countColors :: Code -> [Int]
-countColors = undefined
+countColors [] = replicate (length colors) 0
+countColors xs = countColor [] xs colors
+	where countColor :: [Int] -> Code -> Code -> [Int]
+	      countColor accs _ [] = accs
+	      countColor accs fs (y:ys) = countColor (accs ++ [length $ filter (==y) fs]) fs ys
 
 -- Count number of matches between the actual code and the guess
 matches :: Code -> Code -> Int
